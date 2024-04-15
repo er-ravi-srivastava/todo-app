@@ -36,8 +36,7 @@ if(!parsedPayload.success) {
 app.post("/todos", async function(req,res){
 
     const todo = await todo.find({});
-    console.log(todos) // promise
-
+    console.log(todos) 
 })
 
 app.put("/completed"), async function(req, res) {
@@ -45,7 +44,6 @@ app.put("/completed"), async function(req, res) {
     const parsedPayload = createTodo.safeParse(createPayload);
     
     if (!parsedPayload.success) {
-        // Status code 400 (Bad Request) is more appropriate for input validation errors
         return res.status(400).json({
             msg: "You sent the wrong inputs"
         })
