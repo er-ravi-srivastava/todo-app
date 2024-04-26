@@ -1,7 +1,7 @@
 const express = require("express");
 const { createTodo } = require("./types");
 const app = express();
-const { todo } = require("./db");
+const  DB  = require("./db");
 
 
 
@@ -23,8 +23,9 @@ if(!parsedPayload.success) {
         title: createPayload.title,
         description: createPayload.description,
         completed:false
+        
     })
-
+     
     res.json({
         msg: "todo created"
     })
@@ -33,11 +34,16 @@ if(!parsedPayload.success) {
 
 })
 
-app.post("/todos", async function(req,res){
-
-    const todo = await todo.find({});
-    console.log(todos) 
-})
+app.get("/todos", async function(req, res) {
+    try {
+        const todo = await DB.todo.find({});
+        console.log(todo);
+        res.send(todo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while fetching the todos.");
+    }
+});
 
 app.put("/completed"), async function(req, res) {
     const createPayload = req.body;
@@ -64,3 +70,4 @@ app.put("/completed"), async function(req, res) {
 };
 
 app.listen(3000);
+console.log("server connected");
